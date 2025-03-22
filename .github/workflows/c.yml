@@ -1,0 +1,37 @@
+name: Build and Run C Program
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential libgtk-4-dev libcairo2-dev
+
+      - name: Compile and run
+        run: |
+          gcc -o2 -Wall -g $(pkg-config --cflags gtk4) $(pkg-config --cflags cairo) -o main main.c $(pkg-config --libs gtk4) $(pkg-config --libs cairo) -lm && ./main
+
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag: v1.0.0 
+          name: Release v1.0.0
+          body: |
+            This is the release of version 1.0.0.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
