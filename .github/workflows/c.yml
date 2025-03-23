@@ -23,7 +23,7 @@ jobs:
 
       - name: Compile and run
         run: |
-          gcc -o2 -Wall -g $(pkg-config --cflags gtk4) $(pkg-config --cflags cairo) -o main main.c $(pkg-config --libs gtk4) $(pkg-config --libs cairo) -lm && ./main
+          gcc -o2 -Wall -g $(pkg-config --cflags gtk4) $(pkg-config --cflags cairo) -o main main.c $(pkg-config --libs gtk4) $(pkg-config --libs cairo) -lm
 
       - name: Create Release
         id: create_release
